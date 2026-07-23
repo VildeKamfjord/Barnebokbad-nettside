@@ -81,6 +81,14 @@ main li{margin-bottom:.5rem;color:var(--ink-mild)}
   font-family:'Fraunces',serif;font-style:italic;font-size:1.2rem;color:var(--ink);
   margin:1.6rem 0;
 }
+main blockquote, article blockquote{
+  border-left:2px solid var(--linje);
+  padding:.2rem 0 .2rem 1.3rem;
+  margin:1.5rem 0;
+  color:var(--ink-mild);
+  font-size:.98rem;
+}
+main blockquote p, article blockquote p{margin-bottom:.7rem}
 .ingress{font-size:1.15rem;color:var(--ink-mild);max-width:640px}
 figure{margin:2rem 0}
 figure img{width:100%;height:auto;display:block}
