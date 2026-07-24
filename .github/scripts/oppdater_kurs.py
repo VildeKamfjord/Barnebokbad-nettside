@@ -32,23 +32,23 @@ def formater_dato(dt):
     return f"{dt.day}. {MAANEDER[dt.month - 1]} {dt.year}"
 
 
-def lag_li(dt, summary, siste):
-    stil = "padding:.5rem 0;font-size:.9rem;color:var(--ink-mild)"
-    if not siste:
-        stil = "padding:.5rem 0;border-bottom:1px solid var(--linje);font-size:.9rem;color:var(--ink-mild)"
+def lag_rad(dt, summary):
     trygg_summary = summary.replace("<", "&lt;").replace(">", "&gt;")
-    return f'<li style="{stil}">{formater_dato(dt)} — {trygg_summary}</li>\n'
+    return (
+        f'<div class="kurs-rad">'
+        f'<span>{formater_dato(dt)}</span>'
+        f'<span>{trygg_summary}</span>'
+        f'</div>\n'
+    )
 
 
 def skriv_liste(filnavn, hendelser):
     if not hendelser:
-        tom = '<li style="padding:.5rem 0;font-size:.9rem;color:var(--ink-mild)">Ingen planlagte kurs akkurat nå.</li>\n'
+        tom = '<div class="kurs-rad"><span>—</span><span>Ingen planlagte kurs akkurat nå.</span></div>\n'
         with open(filnavn, "w", encoding="utf-8") as f:
             f.write(tom)
         return
-    html = "".join(
-        lag_li(dt, s, i == len(hendelser) - 1) for i, (dt, s) in enumerate(hendelser)
-    )
+    html = "".join(lag_rad(dt, s) for dt, s in hendelser)
     with open(filnavn, "w", encoding="utf-8") as f:
         f.write(html)
 
