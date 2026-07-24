@@ -50,6 +50,8 @@
   function visFeil() {
     var lister = document.querySelectorAll('.kurs-auto-liste');
     lister.forEach(function (liste) {
+      if (liste.getAttribute('data-ferdig')) return;
+      liste.setAttribute('data-ferdig', '1');
       liste.innerHTML = '';
       var li = document.createElement('li');
       li.style.cssText = 'padding:.5rem 0;font-size:.9rem;color:var(--ink-mild)';
@@ -61,24 +63,22 @@
     });
   }
 
-  function hentMed(url, timeoutMs) {
-    var controller = new AbortController();
-    var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
-    return fetch(url, { signal: controller.signal }).then(function (res) {
-      clearTimeout(timer);
-      if (!res.ok) throw new Error('Feil svar');
-      return res.text();
-    });
+  // Garantert sikkerhetsnett: heng aldri på "Laster ..." lenger enn 8 sekunder
+  setTimeout(visFeil, 8000);
+
+  function visResultat(events) {
+    var lister = document.querySelectorAll('.kurs-auto-liste');
+    lister.forEach(function (liste) { liste.setAttribute('data-ferdig', '1'); });
+    render(events);
   }
 
-  var proxy1 = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(ICS_URL);
-  var proxy2 = 'https://corsproxy.io/?url=' + encodeURIComponent(ICS_URL);
+  var proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(ICS_URL);
 
-  hentMed(proxy1, 6000)
-    .then(function (text) { render(parseICS(text)); })
-    .catch(function () {
-      return hentMed(proxy2, 6000)
-        .then(function (text) { render(parseICS(text)); })
-        .catch(function () { visFeil(); });
-    });
+  fetch(proxyUrl)
+    .then(function (res) {
+      if (!res.ok) throw new Error('Feil svar');
+      return res.text();
+    })
+    .then(function (text) { visResultat(parseICS(text)); })
+    .catch(function () { visFeil(); });
 })();
