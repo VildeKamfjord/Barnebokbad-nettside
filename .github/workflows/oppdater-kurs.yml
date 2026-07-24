@@ -1,1 +1,26 @@
+name: Oppdater kommende kurs
 
+on:
+  schedule:
+    - cron: '0 5 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  oppdater:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Hent kalender og lag lister
+        run: python3 .github/scripts/oppdater_kurs.py
+
+      - name: Commit endringer (kun hvis noe endret seg)
+        run: |
+          git config user.name "kurs-bot"
+          git config user.email "actions@github.com"
+          git add _includes/kurs-auto-3.html _includes/kurs-auto-alle.html
+          git diff --quiet --cached || git commit -m "Oppdater kommende kurs (automatisk)"
+          git push
