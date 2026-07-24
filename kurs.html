@@ -19,10 +19,9 @@ aktiv: kurs
 <main class="bred">
   <h1 class="sidetittel">Kommende kurs</h1>
 
-  <ul class="kurs-auto-liste" data-maks="20" style="list-style:none;margin:1.5rem 0 0;padding:0;max-width:420px">
-    <li style="padding:.5rem 0;font-size:.92rem;color:var(--ink-mild)">Laster …</li>
+  <ul style="list-style:none;margin:1.5rem 0 0;padding:0;max-width:420px">
+    {% include kurs-auto-alle.html %}
   </ul>
-  <script src="kurs-widget.js"></script>
 
   <p style="margin-top:2rem">Ønsker du å arrangere et kurs? Eller er du bare nysgjerrig? Ta kontakt med <a href="mailto:post@barnebokbad.no">post@barnebokbad.no</a></p>
 </main>
