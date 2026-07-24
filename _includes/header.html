@@ -1,1 +1,12 @@
-
+<header class="topp">
+  <div class="topp-indre">
+    <a class="logo" href="index.html">Barnebokbad – metoden bak</a>
+    <nav class="meny">
+      <a href="index.html"{% if page.aktiv == "forside" %} class="aktiv"{% endif %}>Forside</a>
+      <a href="metoden.html"{% if page.aktiv == "metoden" %} class="aktiv"{% endif %}>Metoden</a>
+      <a href="feltnotater.html"{% if page.aktiv == "feltnotater" %} class="aktiv"{% endif %}>Feltnotater</a>
+      <a href="kurs.html"{% if page.aktiv == "kurs" %} class="aktiv"{% endif %}>Kurs</a>
+      <a href="kontakt.html"{% if page.aktiv == "kontakt" %} class="aktiv"{% endif %}>Kontakt</a>
+    </nav>
+  </div>
+</header>
