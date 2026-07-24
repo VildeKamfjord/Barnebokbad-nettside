@@ -1,7 +1,6 @@
 // Henter kommende kurs direkte fra kalenderen, viser som enkel tekstliste.
 (function () {
   var ICS_URL = 'https://p58-caldav.icloud.com/published/2/MTIzOTM2OTQ1MTIzOTM2Oad9yveyAQ23MMK2E8jnZvWuvfdzgACJSfRpyBqNjvYE7yAB3zM7JTKpnCd4vDWNNzLdLvzxf6uRKI-aYMWq7W0';
-  var PROXY = 'https://api.allorigins.win/raw?url=';
   var MAKS_ANTALL = 3;
 
   function parseICS(text) {
@@ -48,10 +47,38 @@
     });
   }
 
-  fetch(PROXY + encodeURIComponent(ICS_URL))
-    .then(function (res) { return res.text(); })
+  function visFeil() {
+    var lister = document.querySelectorAll('.kurs-auto-liste');
+    lister.forEach(function (liste) {
+      liste.innerHTML = '';
+      var li = document.createElement('li');
+      li.style.cssText = 'padding:.5rem 0;font-size:.9rem;color:var(--ink-mild)';
+      var a = document.createElement('a');
+      a.href = 'kurs.html';
+      a.textContent = 'Se kommende kurs →';
+      li.appendChild(a);
+      liste.appendChild(li);
+    });
+  }
+
+  function hentMed(url, timeoutMs) {
+    var controller = new AbortController();
+    var timer = setTimeout(function () { controller.abort(); }, timeoutMs);
+    return fetch(url, { signal: controller.signal }).then(function (res) {
+      clearTimeout(timer);
+      if (!res.ok) throw new Error('Feil svar');
+      return res.text();
+    });
+  }
+
+  var proxy1 = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(ICS_URL);
+  var proxy2 = 'https://corsproxy.io/?url=' + encodeURIComponent(ICS_URL);
+
+  hentMed(proxy1, 6000)
     .then(function (text) { render(parseICS(text)); })
     .catch(function () {
-      // Feilsikring: la lenken til kurs.html stå igjen, ikke vis feilmelding
+      return hentMed(proxy2, 6000)
+        .then(function (text) { render(parseICS(text)); })
+        .catch(function () { visFeil(); });
     });
 })();
