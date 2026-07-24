@@ -101,6 +101,7 @@ main blockquote p, article blockquote p{margin-bottom:.7rem}
 
 /* Kurstabell (dato / arrangeres av) */
 .kurs-tabell{display:grid;grid-template-columns:auto 1fr;gap:0 1.5rem;max-width:420px}
+.kurs-tabell-hode{display:contents}
 .kurs-tabell-hode span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-mild);font-weight:600;padding-bottom:.5rem;border-bottom:1px solid var(--linje)}
 .kurs-rad{display:contents}
 .kurs-rad span{padding:.5rem 0;border-bottom:1px solid var(--linje);font-size:.9rem;color:var(--ink-mild)}
