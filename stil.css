@@ -89,6 +89,25 @@ main blockquote, article blockquote{
   font-size:.98rem;
 }
 main blockquote p, article blockquote p{margin-bottom:.7rem}
+
+/* Sidefelt (kurs + Instagram, likt på alle sider) */
+.med-sidefelt{max-width:1080px;margin:0 auto;padding:0 1.5rem;display:grid;grid-template-columns:1fr 300px;gap:3.5rem;align-items:start}
+.sidefelt{position:sticky;top:5.5rem}
+.sidefelt-boks{margin-bottom:2.5rem}
+.sidefelt-boks h3{font-size:.78rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-mild);margin-bottom:.8rem;font-family:'Karla',sans-serif;font-weight:600}
+.sidefelt-boks .lenke{font-size:.88rem;margin-top:.6rem}
+.to-kolonner{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+@media (max-width:700px){.to-kolonner{grid-template-columns:1fr}}
+
+/* Kurstabell (dato / arrangeres av) */
+.kurs-tabell{display:grid;grid-template-columns:auto 1fr;gap:0 1.5rem;max-width:420px}
+.kurs-tabell-hode span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-mild);font-weight:600;padding-bottom:.5rem;border-bottom:1px solid var(--linje)}
+.kurs-rad{display:contents}
+.kurs-rad span{padding:.5rem 0;border-bottom:1px solid var(--linje);font-size:.9rem;color:var(--ink-mild)}
+@media (max-width:900px){
+  .med-sidefelt{grid-template-columns:1fr}
+  .sidefelt{position:static;border-top:1px solid var(--linje);padding-top:2rem;margin-top:1rem}
+}
 .ingress{font-size:1.15rem;color:var(--ink-mild);max-width:640px}
 figure{margin:2rem 0}
 figure img{width:100%;height:auto;display:block}
