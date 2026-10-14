@@ -44,9 +44,9 @@ def lag_rad(dt, summary):
 
 def skriv_liste(filnavn, hendelser):
     if not hendelser:
-        tom = '<div class="kurs-rad"><span>—</span><span>Ingen planlagte kurs akkurat nå.</span></div>\n'
+        # Tom liste: skriv ingenting, så skjules kursboksene av stilarket
         with open(filnavn, "w", encoding="utf-8") as f:
-            f.write(tom)
+            f.write("")
         return
     html = "".join(lag_rad(dt, s) for dt, s in hendelser)
     with open(filnavn, "w", encoding="utf-8") as f:
